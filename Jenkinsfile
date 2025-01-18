@@ -1,13 +1,13 @@
 pipeline {
     agent any
     tools{
-        maven 'maven-3.8.6'
+        maven 'maven-3.8.7'
     }
 
     stages {
         stage('Clone the repository') {
             steps {
-               git credentialsId: 'Github_username_password', url: 'https://github.com/sandeepkumarmekapothula/Build-and-Push-to-artifactory.git'
+            git credentialsId: 'Github_username_password', url: 'https://github.com/sandeepkumarmekapothula/Build-and-Push-to-artifactory.git'
             }
         }
         
