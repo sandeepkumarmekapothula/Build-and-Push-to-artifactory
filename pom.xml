@@ -17,6 +17,27 @@
   </dependencies>
   <build>
     <finalName>web-application</finalName>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.3.2</version>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.cargo</groupId>
+        <artifactId>cargo-maven3-plugin</artifactId>
+        <version>1.9.10</version>
+        <configuration>
+          <container>
+            <containerId>tomcat9x</containerId>
+            <type>embedded</type>
+          </container>
+        </configuration>
+      </plugin>
+      <plugin>
   </build>
   <distributionManagement>
       <snapshotRepository>
@@ -28,4 +49,7 @@
         <url>http://3.109.133.36:8081/repository/maven-releases/</url>
       </repository>
     </distributionManagement>
+   </plugin>
+    </plugins>
+  </build>
 </project>
