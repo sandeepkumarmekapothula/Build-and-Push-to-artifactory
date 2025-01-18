@@ -1,26 +1,26 @@
 pipeline {
     agent any
     tools{
-        maven 'maven-3.8.6'
+        maven 'maven-3.8.7'
     }
 
     stages {
         stage('Clone the repository') {
             steps {
-               git credentialsId: 'Github_username_password', url: 'https://github.com/techworldwithmurali/Build-and-Push-to-artifactory.git'
+               git credentialsId: 'Github_username_password', url: 'https://github.com/sandeepkumarmekapothula/Build-and-Push-to-artifactory.git'
             }
         }
         
     
         stage('Build the code') {
             steps {
-            sh 'mvn clean deploy'
+            sh 'mvn clean install'
                  }
     }
     
-    stage('Push to Nexus artifactory') {
+    stage('Deploy to tomcat') {
             steps {
-            nexusPublisher nexusInstanceId: 'Nexus-3', nexusRepositoryId: 'maven-snapshots', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: '/var/lib/jenkins/workspace/Build-and-Push-to-artifactory/target/web-application.war']], mavenCoordinate: [artifactId: 'web-application', groupId: 'com.techworldwithmurali', packaging: 'war', version: '1.0-SNAPSHOT']]]
+            deploy adapters: [tomcat9(credentialsId: 'tomcat_cred', path: '', url: 'http://50.16.21.157:8081')], contextPath: null, war: '**/*.war'
                  }
     }
 }
