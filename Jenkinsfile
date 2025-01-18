@@ -1,27 +1,26 @@
 pipeline {
     agent any
     tools{
-        maven 'maven-3.8.7'
+        maven 'maven-3.6.3'
     }
 
     stages {
-        stage('Clone the repository') {
+        stage('GIT Clone') {
             steps {
             git credentialsId: 'Github_username_password', url: 'https://github.com/sandeepkumarmekapothula/Build-and-Push-to-artifactory.git'
             }
         }
-        
-    
-        stage('Build the code') {
+
+        stage('MAVEN Build') {
             steps {
             sh 'mvn clean install'
-                 }
-    }
-    
-    stage('Deploy to tomcat') {
+            }
+        }
+
+        stage('Deploy to Tomcat') {
             steps {
-            deploy adapters: [tomcat9(credentialsId: 'tomcat_cred', path: '', url: 'http://50.16.21.157:8081')], contextPath: null, war: '**/*.war'
+            deploy adapters: [tomcat9(credentialsId: 'tomcat-cred', path: '', url: 'http://35.166.236.112:8081')], contextPath: null, war: '**/*.war'
                  }
+        }
     }
-}
 }
